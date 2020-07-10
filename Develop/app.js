@@ -9,13 +9,13 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
-
+var teamArray = [];
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
-// function runApp() {
-//     function createManager() {
+function runApp() {
+    function createManager() {
         console.log("Let's create your development team!")
         inquirer.prompt([
             {
@@ -34,15 +34,70 @@ const render = require("./lib/htmlRenderer");
                 message: `What is their id?`
             },
             {
-                type:`input`,
+                type: `input`,
                 name: `officeNum`,
                 message: `What is your office number?`
             },
         ]).then(function (data) {
-            console.log(data);
+            var manager = new Manager(data.managerName, data.id, data.managerEmail, data.officeNum);
+            teamArray.push(manager)
+            addTeamMember()
         })
-//     }
-// }
+    }
+    function addTeamMember() {
+        inquirer.prompt([
+            {
+                type: `list`,
+                name: `role`,
+                message: `What team member would you like to add next?`,
+                choices: ['Engineer', `Intern`, `I'm done creating my team`]
+            },
+
+        ]).then(function (data) {
+            switch (data.role) {
+                
+                case "Engineer":
+                    createEngineer();
+                    break;
+                case 'Intern':
+                    createIntern();
+                    break;
+                //  will need to create the team and render it to the page
+                default:
+                    console.log(0);
+            }
+        });
+    }
+    function createEngineer() {
+        inquirer.prompt([
+            {
+                type: 'input',
+                name: 'engineerName',
+                message: `What's your engineer's name?`
+            },
+            {
+                type: 'input',
+                name: 'engineerId',
+                message: `What's your engineer's ID number?`
+            },
+            {
+                type: 'input',
+                name: 'engineerEmail',
+                message: `What's your engineer's email?`
+            }, {
+                type: 'input',
+                name: 'engineerGithub',
+                message: `What's your engineer's github account?`
+            }
+        ]).then(function (data) {
+            var engineer = new Engineer(data.engineerName, data.engineerId, data.engineerEmail, data.engineerGithub)
+            teamArray.push(engineer)
+            addTeamMember();
+        });
+    }
+    createManager();
+}
+runApp();
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
