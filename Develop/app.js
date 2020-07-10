@@ -64,7 +64,7 @@ function runApp() {
                     break;
                 //  will need to create the team and render it to the page
                 default:
-                    console.log(0);
+                    renderTeam();
             }
         });
     }
@@ -123,7 +123,13 @@ function runApp() {
             addTeamMember();
             console.log(teamArray)
         })
+    } function renderTeam(){
+      if(!fs.existsSync(OUTPUT_DIR)) {
+        fs.mkdirSync(OUTPUT_DIR)
+      }
+        fs.writeFileSync(outputPath, render(teamArray),utf-8);
     }
+
     createManager();
 }
 runApp();
