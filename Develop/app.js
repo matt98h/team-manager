@@ -55,7 +55,7 @@ function runApp() {
 
         ]).then(function (data) {
             switch (data.role) {
-                
+
                 case "Engineer":
                     createEngineer();
                     break;
@@ -92,8 +92,37 @@ function runApp() {
         ]).then(function (data) {
             var engineer = new Engineer(data.engineerName, data.engineerId, data.engineerEmail, data.engineerGithub)
             teamArray.push(engineer)
+            console.log(teamArray)
             addTeamMember();
         });
+    }
+    function createIntern() {
+        inquirer.prompt([
+            {
+                type: 'input',
+                name: 'internName',
+                message: `What's your intern's name?`
+            },
+            {
+                type: 'input',
+                name: 'internId',
+                message: `What's your intern's ID number?`
+            },
+            {
+                type: 'input',
+                name: 'internEmail',
+                message: `What's your intern's email?`
+            }, {
+                type: 'input',
+                name: 'internSchool',
+                message: `What school does/did your intern go to?`
+            }
+        ]).then(function (data) {
+            var intern = new Intern(data.internName, data.internId, data.internEmail, data.internSchool)
+            teamArray.push(intern);
+            addTeamMember();
+            console.log(teamArray)
+        })
     }
     createManager();
 }
