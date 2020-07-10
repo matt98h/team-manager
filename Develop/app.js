@@ -62,7 +62,6 @@ function runApp() {
                 case 'Intern':
                     createIntern();
                     break;
-                //  will need to create the team and render it to the page
                 default:
                     renderTeam();
             }
@@ -92,7 +91,7 @@ function runApp() {
         ]).then(function (data) {
             var engineer = new Engineer(data.engineerName, data.engineerId, data.engineerEmail, data.engineerGithub)
             teamArray.push(engineer)
-            console.log(teamArray)
+           
             addTeamMember();
         });
     }
@@ -121,13 +120,13 @@ function runApp() {
             var intern = new Intern(data.internName, data.internId, data.internEmail, data.internSchool)
             teamArray.push(intern);
             addTeamMember();
-            console.log(teamArray)
+          
         })
     } function renderTeam(){
       if(!fs.existsSync(OUTPUT_DIR)) {
         fs.mkdirSync(OUTPUT_DIR)
       }
-        fs.writeFileSync(outputPath, render(teamArray),utf-8);
+        fs.writeFileSync(outputPath, render(teamArray),"utf-8");
     }
 
     createManager();
